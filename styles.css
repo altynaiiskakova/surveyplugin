@@ -1,0 +1,15 @@
+/* .form-group.row.fitem.femptylabel {
+    background-color: white;
+}
+
+.form-group.row.fitem {
+    background-color: lightgray;
+}
+
+div#fitem_id_surveyfile {
+    background-color: white;
+} */
+
+div[id^='fgroup_id_question'] {
+    background-color: lightgray;
+}
