@@ -57,18 +57,6 @@ class mod_surveyplugin_mod_form extends moodleform_mod
         $mform->addRule('name', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
         $this->standard_intro_elements(get_string('moduleintro'));
 
-        // // Add standard grading elements.
-        // $this->standard_grading_coursemodule_elements();
-
-        // $features = new stdClass();
-        // $features->groups = true;
-        // $features->groupings = true;
-        // $features->groupmembersonly = true;
-
-        // $this->standard_coursemodule_elements($features);
-
-        // $this->apply_admin_defaults(true);
-
         // Add standard buttons, common to all modules.
         $this->standard_coursemodule_elements();
         $this->add_action_buttons();
@@ -85,7 +73,6 @@ class mod_surveyplugin_mod_form extends moodleform_mod
     // public function validation($data, $files)
     // {
     //     $errors = array();
-
 
     //     return $errors;
     // }

@@ -70,9 +70,9 @@ function surveyplugin_delete_instance($survey_id)
         return false;
     }
     // Delete any dependent records here.
-    $DB->delete_records('surveyplugin', array(
-        'survey_id' => $survey_id
-    ));
+    // $DB->delete_records('surveyplugin', array(
+    //     'survey_id' => $survey_id
+    // ));
     // Cascading deletion of all related db entries.
     $DB->delete_records('surveyplugin_items', array(
         'survey_id' => $survey_id
@@ -136,19 +136,6 @@ function send_data_to_api($survey_id, $send)
         // echo '<br></br>';
         // echo $answers->user_id;
         // echo '<br></br>';
-        // echo $answers->survey_id;
-        // echo '<br></br>';
-        // echo $answers->item_id;
-        // echo '<br></br>';
-        // echo $answers->question_text;
-        // echo '<br></br>';
-        // echo $answers->item_answer_id;
-        // echo '<br></br>';
-        // echo $answers->date_started;
-        // echo '<br></br>';
-        // echo $answers->date_answered;
-        // echo '<br></br>';
-        //die;
     } else {
         return false;
     }
@@ -175,11 +162,11 @@ function send_data_to_api($survey_id, $send)
         while ($answers->user_id == $current_student_id && $current_id != $lastrow->id) {
             $questions_count++;
             $answers = $DB->get_record('surveyplugin_answer_attempts', array('id' => $current_id));
-            //$answers_average += $answers->answer_text;
+            //$answers_average += $answers->answer;
             $answers_sum += 3;
             fwrite($file_stream_features,  $answers->question_text);
             fwrite($file_stream_features, ',');
-            fwrite($file_stream_features,  $answers->answer_text);
+            fwrite($file_stream_features,  $answers->answer);
             fwrite($file_stream_features, "\n");
             $current_id++;
         }
@@ -198,8 +185,8 @@ function send_data_to_api($survey_id, $send)
     $target_url = 'http://127.0.0.1:8000/dummy?students_per_group=3';
 
     // Create a CURLFile object
-    $st_file = new CURLFile('/home/altynai/Desktop/API/bt-altynai-iskakova-group-formation-support-in-moodle-plugin-development/grouping_api/students.csv', 'text/csv');
-    $ft_file = new CURLFile('/home/altynai/Desktop/API/bt-altynai-iskakova-group-formation-support-in-moodle-plugin-development/grouping_api/features.csv', 'text/csv');
+    $st_file = new CURLFile('/home/altynai/Desktop/BACHELOR-IMPLEMENTATION/API/bt-altynai-iskakova-group-formation-support-in-moodle-plugin-development/grouping_api/students.csv', 'text/csv');
+    $ft_file = new CURLFile('/home/altynai/Desktop/BACHELOR-IMPLEMENTATION/API/bt-altynai-iskakova-group-formation-support-in-moodle-plugin-development/grouping_api/features.csv', 'text/csv');
 
     $post = array(
         'students' => $st_file,
@@ -241,13 +228,50 @@ function send_data_to_api($survey_id, $send)
         }
         unset($value);
     }
+    //var_dump($groups);
+    foreach (array_keys($groups) as &$key) {
+        //echo $value["id"];
+        $tmp = 'Group #' . $key;
+        if (!$group = $DB->get_record('groups', array('name' => $tmp))) {
+            $group_to_insert = new stdClass();
+            $group_to_insert->courseid = 2;
+            $group_to_insert->name = $tmp;
+            $group_to_insert->timecreated = time();     
+            $group_to_insert->timemodified = time();
+            $group_to_insert->description = 'generated group from survey';
+            $group_to_insert->descriptionformat = 1;
+            $DB->insert_record('groups', $group_to_insert);
+            // foreach ($groups[$key] as &$student) {
+            //     var_dump($student);
+            // }
+            // die;
+
+            foreach ($groups[$key] as &$student) {
+                //$studentid = $student; //student_id
+                $current_group = $DB->get_record('groups', array('name' => $tmp));
+                $current_group_id = $current_group->id;
+                //echo $current_group_id;
+                $student_to_insert = new stdClass();
+                $student_to_insert->groupid = $current_group_id;
+                $student_to_insert->timeadded = time();
+                //echo 'STUDENT ID: ' . intval($student);
+                $student_to_insert->userid = rand(1, 1000000);;
+                $DB->insert_record('groups_members', $student_to_insert);
+            }
+        }
+        // foreach ($groups[$key] as &$student) {
+        //     $tmp .= $student . ' ';
+        // }
+        //$tmp = "<pre>" . 'student ' . $value["id"] . ': ' . $value["group"] . "\t" . "</pre><br>";
+    }
+
 
     // Print groups with their students
     $generated_groups = '<br></br>';
     foreach (array_keys($groups) as &$key) {
         //echo $value["id"];
-        $tmp = "<pre>" . 'Group #' . $key . ': ' ;
-        foreach($groups[$key] as &$student){
+        $tmp = "<pre>" . 'Group #' . $key . ': ';
+        foreach ($groups[$key] as &$student) {
             $tmp .= $student . ' ';
         }
         //$tmp = "<pre>" . 'student ' . $value["id"] . ': ' . $value["group"] . "\t" . "</pre><br>";
@@ -269,3 +293,20 @@ function send_data_to_api($survey_id, $send)
 // if (isset($_GET['send'])) {
 //     send_data_to_api($_GET['_id'], $_GET['send']);
 // }
+
+/**
+ * Adds jQuery
+ *
+ * @param string $filename
+ * @throws moodle_exception
+ */
+function surveyplugin_add_jquery($PAGE, $filename = null) {
+    global $CFG;
+    $PAGE->requires->jquery();
+    $PAGE->requires->jquery_plugin('ui');
+    $PAGE->requires->jquery_plugin('ui-css');
+
+    if (!is_null($filename)) {
+        $PAGE->requires->js(new moodle_url($CFG->wwwroot.'/mod/surveyplugin/js/'.$filename));
+    }
+}

@@ -14,7 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+
 /**
+ * This file contains the deadline form class
  *
  * @package    mod_surveyplugin
  * @author     iskakova
@@ -23,30 +25,23 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->libdir.'/formslib.php');
-require_once("$CFG->libdir/admin/tool/uploadcourse/classes/base_form.php");
+require_once($CFG->dirroot . "/lib/formslib.php");
 
 /**
- * Upload a file CVS file with survey information.
+ * The deadline form class
  *
  * @package    mod_surveyplugin
  * @author     iskakova
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class tool_uploadsurvey_form extends tool_uploadcourse_base_form {
-
-    /**
-     * The standard form definiton.
-     * @return void
-     */
-    public function definition () {
+class mod_surveyplugin_deadline_form extends moodleform
+{
+    public function definition()
+    {
         $mform = $this->_form;
-        $mform->addElement('header', 'generalhdr', get_string('general')); // General header
-
-        $mform->addElement('filepicker', 'coursefile', get_string('coursefile', 'tool_uploadcourse')); 
-        // $mform->addRule('coursefile', null, 'required');
-        $mform->addHelpButton('coursefile', 'coursefile', 'tool_uploadcourse');
-
-        $this->add_action_buttons(true, 'Create survey');
+        $mform->addElement('header', 'availabilityhdr', 'Set deadline');
+        $mform->addElement('date_time_selector', 'deadline', get_string('deadline', 'lesson'), array('optional' => true));
+        $mform->setDefault('deadline', 0);
+        $this->add_action_buttons(true, 'Save');
     }
 }

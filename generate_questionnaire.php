@@ -21,6 +21,7 @@ function generate_moodle_survey($input_survey_id){
     $survey_id_check = $DB->get_record('surveyplugin_items', array('survey_id'=>$input_survey_id));
     $survey_id_check_in_surveyplugin_surveys = $DB->get_record('surveyplugin', array('survey_id'=>$input_survey_id));
 
+
     if (!$survey_elements || !$survey_id_check || !$survey_id_check_in_surveyplugin_surveys) {
         \core\notification::add('Table surveyplugin is empty. No survey to create', 'error');
         return false;
@@ -35,6 +36,7 @@ function generate_moodle_survey($input_survey_id){
     $i = $survey_firstrecord->id;
     $start = $survey_firstrecord->id;
     $start_saved = $survey_firstrecord->id;
+
     while($survey_elements[$i]->survey_id == $input_survey_id){
         if ($survey_elements[$i]->element == "p") {
             $page_count++;
@@ -175,11 +177,11 @@ function generate_moodle_survey($input_survey_id){
                                 \$answer = \$fromform->{\"answer\" . \$j};                                
                             }
                             \$recordtoinsert_attempt = new stdClass();
-                            \$recordtoinsert_attempt->user_id = \$USER->id;
+                            \$recordtoinsert_attempt->student_id = \$USER->id;
                             \$recordtoinsert_attempt->survey_id = \$survey_id;
                             \$recordtoinsert_attempt->item_id = \$survey_elements[\$j]->item_id; 
                             \$recordtoinsert_attempt->question_text = \$question;
-                            \$recordtoinsert_attempt->answer_text = \$answer;                      
+                            \$recordtoinsert_attempt->answer = \$answer;                      
                             \$recordtoinsert_attempt->item_answer_id = '';  
                             \$recordtoinsert_attempt->date_started = date('F j, Y, g:i a');                      
                             \$recordtoinsert_attempt->date_answered = date('F j, Y, g:i a');
@@ -197,11 +199,11 @@ function generate_moodle_survey($input_survey_id){
                                 \$answer_text = (\$item_answer_record->text !== '') ? \$item_answer_record->text : \$item_answer_record->value;
                                 \$question = \$survey_elements[\$j]->object_id . ': ' . \$survey_elements[\$j]->title;                            
                                 \$recordtoinsert_attempt = new stdClass();                          
-                                \$recordtoinsert_attempt->user_id = \$USER->id;
+                                \$recordtoinsert_attempt->student_id = \$USER->id;
                                 \$recordtoinsert_attempt->survey_id = \$survey_id;
                                 \$recordtoinsert_attempt->item_id = \$survey_elements[\$j]->item_id; 
                                 \$recordtoinsert_attempt->question_text = \$question;
-                                \$recordtoinsert_attempt->answer_text = \$answer_text;                           
+                                \$recordtoinsert_attempt->answer = \$answer_number;                           
                                 \$recordtoinsert_attempt->item_answer_id = \$item_answer_record->item_answer_id;  
                                 \$recordtoinsert_attempt->date_started = date('F j, Y, g:i a');                      
                                 \$recordtoinsert_attempt->date_answered = date('F j, Y, g:i a');
@@ -224,11 +226,11 @@ function generate_moodle_survey($input_survey_id){
                                     \$item_answer_record= \$DB->get_record('surveyplugin_item_answers', array('item_id' => \$survey_elements[\$j]->item_id, 'value' => \$k_for_answer));                                   
                                     \$answer_text = (\$item_answer_record->text !== '') ? \$item_answer_record->text : \$item_answer_record->value;
                                     \$recordtoinsert_attempt = new stdClass();
-                                    \$recordtoinsert_attempt->user_id = \$USER->id;
+                                    \$recordtoinsert_attempt->student_id = \$USER->id;
                                     \$recordtoinsert_attempt->survey_id = \$survey_id;
                                     \$recordtoinsert_attempt->item_id = \$survey_elements[\$j]->item_id; 
                                     \$recordtoinsert_attempt->question_text = \$question;
-                                    \$recordtoinsert_attempt->answer_text = \$answer_text;                       
+                                    \$recordtoinsert_attempt->answer = \$k_for_answer;                       
                                     \$recordtoinsert_attempt->item_answer_id = \$item_answer_record->item_answer_id; 
                                     \$recordtoinsert_attempt->date_started = date('F j, Y, g:i a');                      
                                     \$recordtoinsert_attempt->date_answered = date('F j, Y, g:i a');

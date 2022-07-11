@@ -18,9 +18,6 @@
  * English lang strings
  *
  * @package     mod_surveyplugin
- * @author      Eduard Gallwas, Johannes Konert, Rene Roepke, Nora Wester, Ahmed Zukic
- * @copyright   2015 MoodlePeers
- * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 $string ['language'] = 'en';
 $string ['modulename'] = 'Surveyplugin';

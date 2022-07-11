@@ -23,11 +23,6 @@ function parse_inputfile($inputfile)
   require_once(__DIR__ . '/../../config.php');
   global $DB, $USER, $COURSE;
 
-  //Survey processing, should get a user input actually --> TBD
-  // $inputfile = 'survey.csv';
-  //$inputfile = $CFG->tempdir . '/groupformation/survey.csv';
-  //__DIR__ . '/../../../moodledata/temp/groupformation'
-
   // Open the file for reading
   if (($stream = fopen("{$inputfile}", "r")) !== FALSE) {    
     $survey_id = rand(1, 1000000); // Initialize a random number for survey_id, this will be one unique id for this survey

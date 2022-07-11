@@ -18,12 +18,3 @@ echo $OUTPUT->header();
 
 echo $OUTPUT->footer();
 
-// global $DB;
-
-// $templatecontext = (object)[
-//     'messages' => array_values($messages),
-//     'editurl' => new moodle_url('/mod/groupformation/edit.php')
-// ];
-
-// echo $OUTPUT->render_from_template('local_groupformation/groupformation', $templatecontext);
-

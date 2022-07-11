@@ -15,25 +15,23 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Upgrade function for database changes
+ * Task specifications
  *
- * @package     mod_surveyplugin
- * @author      Eduard Gallwas, Johannes Konert, Rene Roepke, Nora Wester, Ahmed Zukic
- * @copyright   2015 MoodlePeers
- * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    mod_surveyplugin
+ * @author     iskakova
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+defined('MOODLE_INTERNAL') || die();
 
-defined('MOODLE_INTERNAL') || die ();
 
-/**
- * Execute surveyplugin upgrade from the given old version
- *
- * @param int $oldversion
- * @return bool
- * @throws ddl_exception
- * @throws ddl_field_missing_exception
- * @throws ddl_table_missing_exception
- * @throws dml_exception
- * @throws downgrade_exception
- * @throws upgrade_exception
- */
+$tasks = [
+    [
+        'classname' => '\mod_surveyplugin\task\close_survey_task',
+        'blocking' => 0,
+        'minute' => '*',
+        'hour' => '*',
+        'day' => '*',
+        'month' => '*',
+        'dayofweek' => '*'
+    ]
+];

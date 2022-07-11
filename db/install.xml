@@ -17,6 +17,7 @@
         <FIELD NAME="course_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
         <FIELD NAME="created_date" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
         <FIELD NAME="admin_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="deadline" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="0" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
@@ -52,11 +53,11 @@
     <TABLE NAME="surveyplugin_answer_attempts" COMMENT="each record is a student's answer to a specific item/question">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
-        <FIELD NAME="user_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="student_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
         <FIELD NAME="survey_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
         <FIELD NAME="item_id" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
         <FIELD NAME="question_text" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
-        <FIELD NAME="answer_text" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="answer" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
         <FIELD NAME="item_answer_id" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
         <FIELD NAME="date_started" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
         <FIELD NAME="date_answered" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
