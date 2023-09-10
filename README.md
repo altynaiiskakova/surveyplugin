@@ -58,13 +58,13 @@ which creates a symbolic link pointing to
 `/etc/apache2/mods-enabled/php5`
 3. MySQL
 MySQL is one of the popular open source databases. It is mostly used for web-based
-applications [Abo(2022)]. For this work we installed MySQL Community Server version
+applications. For this work we installed MySQL Community Server version
 8.0.27 on a local system.
 4. Moodle GIT repository
 One of the last steps was to clone and install Moodle repository by running the following
 command. To choose the most suitable and stable Moodle version was crucial for set up
 and further work.
 `git clone -b MOODLE_36_STABLE git://git.moodle.org/moodle.git`
-41After cloning the repository one should call and install the script below to complete the
+After cloning the repository one should call and install the script below to complete the
 process.
 `/usr/bin/php /var/www/moodle/admin/cli/install.php`
